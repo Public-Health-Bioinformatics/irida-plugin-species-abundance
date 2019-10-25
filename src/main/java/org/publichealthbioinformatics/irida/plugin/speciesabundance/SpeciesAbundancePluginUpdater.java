@@ -144,11 +144,25 @@ public class SpeciesAbundancePluginUpdater implements AnalysisSampleUpdater {
 	Map<String, String> parseSpeciesAbundanceFile(Path speciesAbundanceFilePath) throws IOException {
 		BufferedReader speciesAbundanceReader = new BufferedReader(new FileReader(speciesAbundanceFilePath.toFile()));
 		Map<String, String> mostAbundantSpecies = new HashMap<>();
-
+		ArrayList<String> expectedHeaderFields = new ArrayList<String>(Arrays.asList(
+				"name",
+		        "taxonomy_id",
+		        "taxonomy_lvl",
+		        "kraken_assigned_reads",
+		        "added_reads",
+		        "new_est_reads",
+		        "fraction_total_reads"
+		));
 		try {
 			String headerLine = speciesAbundanceReader.readLine();
-			String mostAbundantSpeciesLine = speciesAbundanceReader.readLine();
 			ArrayList<String> headerFields = new ArrayList<String>(Arrays.asList(headerLine.split("\t")));
+			String mostAbundantSpeciesLine;
+			if (!headerFields.equals(expectedHeaderFields)) { // header not present
+					mostAbundantSpeciesLine = headerLine;
+					headerFields = expectedHeaderFields;
+			} else {
+				mostAbundantSpeciesLine = speciesAbundanceReader.readLine();
+			}
 			ArrayList<String> mostAbundantSpeciesFields = new ArrayList<String>(Arrays.asList(mostAbundantSpeciesLine.split("\t")));
 			assert headerFields.size() == mostAbundantSpeciesFields.size();
 			for (int i = 0; i < headerFields.size(); i++) {
