@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <iridaWorkflow>
-  <id>152c9062-d39b-4fce-8234-2353223afc90</id>
+  <id>e2cc19cc-defc-49df-9b23-db35c2aea71c</id>
   <name>species-abundance</name>
   <version>0.1.1</version>
   <analysisType>SPECIES_ABUNDANCE</analysisType>

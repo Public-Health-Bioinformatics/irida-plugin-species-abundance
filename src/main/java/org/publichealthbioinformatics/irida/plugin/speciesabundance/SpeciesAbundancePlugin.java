@@ -71,14 +71,14 @@ public class SpeciesAbundancePlugin extends Plugin {
 		 * <strong>id</strong> entry in the <strong>irida_workflow.xml</strong> file.
 		 * 
 		 * <pre>
-		 * {@code <id>152c9062-d39b-4fce-8234-2353223afc90</id>}
+		 * {@code <id>e2cc19cc-defc-49df-9b23-db35c2aea71c</id>}
 		 * </pre>
 		 * 
 		 * @return A {@link UUID} defining the id of this pipeline.
 		 */
 		@Override
 		public UUID getDefaultWorkflowUUID() {
-			return UUID.fromString("152c9062-d39b-4fce-8234-2353223afc90");
+			return UUID.fromString("e2cc19cc-defc-49df-9b23-db35c2aea71c");
 		}
 
 		/*******************************************************************************
