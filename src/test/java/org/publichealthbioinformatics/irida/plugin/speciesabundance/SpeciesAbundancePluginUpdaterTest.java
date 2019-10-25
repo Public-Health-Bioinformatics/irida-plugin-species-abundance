@@ -124,4 +124,14 @@ public class SpeciesAbundancePluginUpdaterTest {
         assertThat(mostAbundantSpecies, IsMapContaining.hasKey("taxonomy_id"));
         assertThat(mostAbundantSpecies, IsMapContaining.hasKey("fraction_total_reads"));
     }
+
+    @Test
+    public void testParseSpeciesAbundanceFileNoHeader() throws Throwable {
+        Path speciesAbundanceFilePath = Paths.get(ClassLoader.getSystemResource("species_abundance_no_header.tsv").toURI());
+        Map<String, String> mostAbundantSpecies = updater.parseSpeciesAbundanceFile(speciesAbundanceFilePath);
+        assertThat(mostAbundantSpecies, IsMapContaining.hasKey("name"));
+        assertThat(mostAbundantSpecies, IsMapContaining.hasKey("taxonomy_lvl"));
+        assertThat(mostAbundantSpecies, IsMapContaining.hasKey("taxonomy_id"));
+        assertThat(mostAbundantSpecies, IsMapContaining.hasKey("fraction_total_reads"));
+    }
 }
