@@ -1,0 +1,298 @@
+{
+    "uuid": "171e552c-a1fe-4d3c-ba16-9100994fb169",
+    "tags": [],
+    "format-version": "0.1",
+    "name": "Species Abundance",
+    "version": 1,
+    "steps": {
+        "0": {
+            "tool_id": null,
+            "tool_version": null,
+            "outputs": [],
+            "workflow_outputs": [
+                {
+                    "output_name": "output",
+                    "uuid": "8b3fbe49-0ac6-4fac-a9fb-9d02b08d7e54",
+                    "label": null
+                }
+            ],
+            "input_connections": {},
+            "tool_state": "{\"collection_type\": \"list:paired\", \"name\": \"sequence_reads_paired\"}",
+            "id": 0,
+            "uuid": "84f69686-f264-4d75-a00c-06c52e269897",
+            "errors": null,
+            "name": "Input dataset collection",
+            "label": "sequence_reads_paired",
+            "inputs": [
+                {
+                    "name": "sequence_reads_paired",
+                    "description": ""
+                }
+            ],
+            "position": {
+                "top": 223,
+                "left": 116
+            },
+            "annotation": "",
+            "content_id": null,
+            "type": "data_collection_input"
+        },
+        "1": {
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/kraken2/kraken2/2.0.8_beta+galaxy0",
+            "tool_version": "2.0.8_beta+galaxy0",
+            "outputs": [
+                {
+                    "type": "input",
+                    "name": "classified_out_s"
+                },
+                {
+                    "type": "input",
+                    "name": "unclassified_out_s"
+                },
+                {
+                    "type": "tabular",
+                    "name": "report_output"
+                },
+                {
+                    "type": "input",
+                    "name": "out1"
+                },
+                {
+                    "type": "input",
+                    "name": "out2"
+                },
+                {
+                    "type": "input",
+                    "name": "out3"
+                },
+                {
+                    "type": "input",
+                    "name": "out4"
+                },
+                {
+                    "type": "input",
+                    "name": "out1.1"
+                },
+                {
+                    "type": "input",
+                    "name": "out2.1"
+                },
+                {
+                    "type": "input",
+                    "name": "out3.1"
+                },
+                {
+                    "type": "input",
+                    "name": "out4.1"
+                },
+                {
+                    "type": "tabular",
+                    "name": "output"
+                }
+            ],
+            "workflow_outputs": [
+                {
+                    "output_name": "report_output",
+                    "uuid": "26e64288-9604-4c9f-bc48-b3274cba2fa9",
+                    "label": null
+                }
+            ],
+            "input_connections": {
+                "single_paired|input_pair": {
+                    "output_name": "output",
+                    "id": 0
+                }
+            },
+            "tool_state": "{\"__page__\": null, \"confidence\": \"\\\"0.0\\\"\", \"split_reads\": \"\\\"false\\\"\", \"single_paired\": \"{\\\"__current_case__\\\": 0, \\\"input_pair\\\": {\\\"__class__\\\": \\\"ConnectedValue\\\"}, \\\"single_paired_selector\\\": \\\"collection\\\"}\", \"__rerun_remap_job_id__\": null, \"quick\": \"\\\"false\\\"\", \"kraken2_database\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"use_names\": \"\\\"false\\\"\", \"min_base_quality\": \"\\\"0\\\"\", \"report\": \"{\\\"create_report\\\": \\\"true\\\", \\\"report_zero_counts\\\": \\\"false\\\", \\\"use_mpa_style\\\": \\\"false\\\"}\"}",
+            "id": 1,
+            "tool_shed_repository": {
+                "owner": "iuc",
+                "changeset_revision": "328c607150ff",
+                "name": "kraken2",
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            },
+            "uuid": "04726ab7-9ac7-4bea-8a19-997af925efb6",
+            "errors": null,
+            "name": "Kraken2",
+            "post_job_actions": {
+                "HideDatasetActionout3": {
+                    "output_name": "out3",
+                    "action_type": "HideDatasetAction",
+                    "action_arguments": {}
+                },
+                "HideDatasetActionout2": {
+                    "output_name": "out2",
+                    "action_type": "HideDatasetAction",
+                    "action_arguments": {}
+                },
+                "HideDatasetActionout1": {
+                    "output_name": "out1",
+                    "action_type": "HideDatasetAction",
+                    "action_arguments": {}
+                },
+                "HideDatasetActionclassified_out_s": {
+                    "output_name": "classified_out_s",
+                    "action_type": "HideDatasetAction",
+                    "action_arguments": {}
+                },
+                "HideDatasetActionoutput": {
+                    "output_name": "output",
+                    "action_type": "HideDatasetAction",
+                    "action_arguments": {}
+                },
+                "HideDatasetActionout1.1": {
+                    "output_name": "out1.1",
+                    "action_type": "HideDatasetAction",
+                    "action_arguments": {}
+                },
+                "HideDatasetActionunclassified_out_s": {
+                    "output_name": "unclassified_out_s",
+                    "action_type": "HideDatasetAction",
+                    "action_arguments": {}
+                },
+                "HideDatasetActionout4": {
+                    "output_name": "out4",
+                    "action_type": "HideDatasetAction",
+                    "action_arguments": {}
+                },
+                "HideDatasetActionout4.1": {
+                    "output_name": "out4.1",
+                    "action_type": "HideDatasetAction",
+                    "action_arguments": {}
+                },
+                "HideDatasetActionout2.1": {
+                    "output_name": "out2.1",
+                    "action_type": "HideDatasetAction",
+                    "action_arguments": {}
+                },
+                "HideDatasetActionout3.1": {
+                    "output_name": "out3.1",
+                    "action_type": "HideDatasetAction",
+                    "action_arguments": {}
+                },
+                "RenameDatasetActionreport_output": {
+                    "output_name": "report_output",
+                    "action_type": "RenameDatasetAction",
+                    "action_arguments": {
+                        "newname": "kraken2_report.tsv"
+                    }
+                }
+            },
+            "label": null,
+            "inputs": [
+                {
+                    "name": "kraken2_database",
+                    "description": "runtime parameter for tool Kraken2"
+                }
+            ],
+            "position": {
+                "top": 276,
+                "left": 411.5
+            },
+            "annotation": "",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/kraken2/kraken2/2.0.8_beta+galaxy0",
+            "type": "tool"
+        },
+        "2": {
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/bracken/est_abundance/2.5+galaxy0",
+            "tool_version": "2.5+galaxy0",
+            "outputs": [
+                {
+                    "type": "tabular",
+                    "name": "report"
+                }
+            ],
+            "workflow_outputs": [],
+            "input_connections": {
+                "input": {
+                    "output_name": "report_output",
+                    "id": 1
+                }
+            },
+            "tool_state": "{\"__page__\": null, \"level\": \"\\\"S\\\"\", \"__rerun_remap_job_id__\": null, \"threshold\": \"\\\"10\\\"\", \"input\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"kmer_distr\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\"}",
+            "id": 2,
+            "tool_shed_repository": {
+                "owner": "iuc",
+                "changeset_revision": "a5145865e467",
+                "name": "bracken",
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            },
+            "uuid": "928eb838-cb82-4621-b309-cbe0e4487d47",
+            "errors": null,
+            "name": "Estimate Abundance at Taxonomic Level",
+            "post_job_actions": {
+                "HideDatasetActionreport": {
+                    "output_name": "report",
+                    "action_type": "HideDatasetAction",
+                    "action_arguments": {}
+                }
+            },
+            "label": null,
+            "inputs": [
+                {
+                    "name": "input",
+                    "description": "runtime parameter for tool Estimate Abundance at Taxonomic Level"
+                },
+                {
+                    "name": "kmer_distr",
+                    "description": "runtime parameter for tool Estimate Abundance at Taxonomic Level"
+                }
+            ],
+            "position": {
+                "top": 278.5,
+                "left": 731
+            },
+            "annotation": "",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/bracken/est_abundance/2.5+galaxy0",
+            "type": "tool"
+        },
+        "3": {
+            "tool_id": "sort1",
+            "tool_version": "1.1.0",
+            "outputs": [
+                {
+                    "type": "input",
+                    "name": "out_file1"
+                }
+            ],
+            "workflow_outputs": [
+                {
+                    "output_name": "out_file1",
+                    "uuid": "d81f9118-f0cf-4659-88f6-ca712a6d457e",
+                    "label": null
+                }
+            ],
+            "input_connections": {
+                "input": {
+                    "output_name": "report",
+                    "id": 2
+                }
+            },
+            "tool_state": "{\"__page__\": null, \"style\": \"\\\"num\\\"\", \"column\": \"\\\"7\\\"\", \"__rerun_remap_job_id__\": null, \"column_set\": \"[]\", \"input\": \"{\\\"__class__\\\": \\\"ConnectedValue\\\"}\", \"header_lines\": \"\\\"1\\\"\", \"order\": \"\\\"DESC\\\"\"}",
+            "id": 3,
+            "uuid": "1099f9c0-fe03-4de1-9ab7-1942fba74c84",
+            "errors": null,
+            "name": "Sort",
+            "post_job_actions": {
+                "RenameDatasetActionout_file1": {
+                    "output_name": "out_file1",
+                    "action_type": "RenameDatasetAction",
+                    "action_arguments": {
+                        "newname": "species_abundance.tsv"
+                    }
+                }
+            },
+            "label": null,
+            "inputs": [],
+            "position": {
+                "top": 478.5,
+                "left": 732.5
+            },
+            "annotation": "",
+            "content_id": "sort1",
+            "type": "tool"
+        }
+    },
+    "annotation": "",
+    "a_galaxy_workflow": "true"
+}
