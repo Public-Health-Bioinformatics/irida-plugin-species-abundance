@@ -81,16 +81,19 @@ public class SpeciesAbundancePluginUpdaterTest {
         Sample sample = new Sample();
         sample.setId(0L);
 
-        ImmutableMap<MetadataTemplateField, MetadataEntry> metadataMap = ImmutableMap
-                .of(new MetadataTemplateField("", ""), new MetadataEntry("", ""));
-        when(metadataTemplateService.getMetadataMap(any(Map.class))).thenReturn(metadataMap);
+        MetadataEntry metadataEntry = new MetadataEntry("", "", new MetadataTemplateField("", ""));
+
+        Set<MetadataEntry> metadataEntries = new HashSet<>();
+        metadataEntries.add(metadataEntry);
+
+        when(metadataTemplateService.convertMetadataStringsToSet(any(Map.class))).thenReturn(metadataEntries);
 
         updater.update(Lists.newArrayList(sample), submission);
 
         ArgumentCaptor<Map> mapCaptor = ArgumentCaptor.forClass(Map.class);
 
         //this is the important bit.  Ensures the correct values got pulled from the file
-        verify(metadataTemplateService).getMetadataMap(mapCaptor.capture());
+        verify(metadataTemplateService).convertMetadataStringsToSet(mapCaptor.capture());
         Map<String, MetadataEntry> metadata = mapCaptor.getValue();
 
         int found = 0;
@@ -107,12 +110,13 @@ public class SpeciesAbundancePluginUpdaterTest {
         }
         assertEquals("should have found the same number of results", expectedResults.keySet().size(), found);
 
+        ArgumentCaptor<Set> setCaptor = ArgumentCaptor.forClass(Set.class);
         // this bit just ensures the merged data got saved
-        verify(sampleService).updateFields(eq(sample.getId()), mapCaptor.capture());
-        Map<MetadataTemplateField, MetadataEntry> value = (Map<MetadataTemplateField, MetadataEntry>) mapCaptor
-                .getValue().get("metadata");
+        verify(sampleService).mergeSampleMetadata(eq(sample), setCaptor.capture());
 
-        assertEquals(metadataMap.keySet().iterator().next(), value.keySet().iterator().next());
+        Set<MetadataEntry> capturedValues = setCaptor.getValue();
+
+        assertEquals(metadataEntries.iterator().next(), capturedValues.iterator().next());
     }
 
     @Test
