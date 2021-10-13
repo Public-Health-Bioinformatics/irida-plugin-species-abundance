@@ -6,12 +6,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.*;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.collect.ImmutableMap;
-
 import ca.corefacility.bioinformatics.irida.exceptions.IridaWorkflowNotFoundException;
 import ca.corefacility.bioinformatics.irida.exceptions.PostProcessingException;
-import ca.corefacility.bioinformatics.irida.model.sample.MetadataTemplateField;
 import ca.corefacility.bioinformatics.irida.model.sample.Sample;
 import ca.corefacility.bioinformatics.irida.model.sample.metadata.MetadataEntry;
 import ca.corefacility.bioinformatics.irida.model.sample.metadata.PipelineProvidedMetadataEntry;
@@ -23,6 +19,8 @@ import ca.corefacility.bioinformatics.irida.pipeline.results.updater.AnalysisSam
 import ca.corefacility.bioinformatics.irida.service.sample.MetadataTemplateService;
 import ca.corefacility.bioinformatics.irida.service.sample.SampleService;
 import ca.corefacility.bioinformatics.irida.service.workflow.IridaWorkflowsService;
+
+import com.google.common.annotations.VisibleForTesting;
 
 /**
  * This implements a class used to perform post-processing on the analysis
@@ -39,7 +37,7 @@ public class SpeciesAbundancePluginUpdater implements AnalysisSampleUpdater {
 
 	/**
 	 * Builds a new {@link SpeciesAbundancePluginUpdater} with the given services.
-	 * 
+	 *
 	 * @param metadataTemplateService The metadata template service.
 	 * @param sampleService           The sample service.
 	 * @param iridaWorkflowsService   The irida workflows service.
@@ -54,7 +52,7 @@ public class SpeciesAbundancePluginUpdater implements AnalysisSampleUpdater {
 	/**
 	 * Code to perform the actual update of the {@link Sample}s passed in the
 	 * collection.
-	 * 
+	 *
 	 * @param samples  A collection of {@link Sample}s that were passed to this
 	 *                 pipeline.
 	 * @param analysis The {@link AnalysisSubmission} object corresponding to this
@@ -111,14 +109,11 @@ public class SpeciesAbundancePluginUpdater implements AnalysisSampleUpdater {
 			String mostAbundantSpeciesProportionTotalReadsKey = workflowName + "/" + "proportion";
 			metadataEntries.put(mostAbundantSpeciesProportionTotalReadsKey, mostAbundantSpeciesProportionTotalReadsEntry);
 
-			Map<MetadataTemplateField, MetadataEntry> metadataMap = metadataTemplateService
-					.getMetadataMap(metadataEntries);
+			//convert the string/entry Map to a Set of MetadataEntry
+			Set<MetadataEntry> metadataSet = metadataTemplateService.convertMetadataStringsToSet(metadataEntries);
 
-			// merges with existing sample metadata
-			sample.mergeMetadata(metadataMap);
-
-			// does an update of the sample metadata
-			sampleService.updateFields(sample.getId(), ImmutableMap.of("metadata", sample.getMetadata()));
+			// merges with existing sample metadata and does an update of the sample metadata.
+			sampleService.mergeSampleMetadata(sample,metadataSet);
 		} catch (IOException e) {
 			throw new PostProcessingException("Error parsing species abundance file", e);
 		} catch (IridaWorkflowNotFoundException e) {
@@ -128,15 +123,15 @@ public class SpeciesAbundancePluginUpdater implements AnalysisSampleUpdater {
 
 	/**
 	 * Parses out the read count from the passed file.
-	 * 
+	 *
 	 * @param speciesAbundanceFilePath The file containing the species abundance. The file contents
 	 *                      should look like:
-	 * 
+	 *
 	 *                      <pre>
 	 *                      name	taxonomy_id	taxonomy_lvl	kraken_assigned_reads	added_reads	new_est_reads	fraction_total_reads
 	 *                      Salmonella enterica	28901	S	433515	32457	465972	0.99016
 	 *                      </pre>
-	 * 
+	 *
 	 * @return A {@link Map<String, String>} containing the read count.
 	 * @throws IOException If there was an error reading the file.
 	 */
@@ -177,7 +172,7 @@ public class SpeciesAbundancePluginUpdater implements AnalysisSampleUpdater {
 
 	/**
 	 * The {@link AnalysisType} this {@link AnalysisSampleUpdater} corresponds to.
-	 * 
+	 *
 	 * @return The {@link AnalysisType} this {@link AnalysisSampleUpdater}
 	 *         corresponds to.
 	 */
