@@ -38,10 +38,10 @@ managers within your Galaxy instance. These can be found at:
 
 ## Installing to IRIDA
 
-Please download the provided `irida-plugin-species-abundance-[version].jar` from the [releases][] page and copy to your 
-`/etc/irida/plugins` directory.  Now you may start IRIDA and you should see the pipeline appear in your list of pipelines.
+Please download the provided `irida-plugin-species-abundance-[version].jar` from the [releases][https://github.com/Public-Health-Bioinformatics/irida-plugin-species-abundance/releases]
+page and copy to your  `/etc/irida/plugins` directory.  Now you may start IRIDA and you should see the pipeline appear in your list of pipelines.
 
-*Note:* This plugin requires you to be running IRIDA version >= `19.01`. Please see the [IRIDA][] documentation for more details.
+*Note:* This plugin requires you to be running IRIDA version >= `21.01`. Please see the [IRIDA documentation][https://phac-nml.github.io/irida-documentation/developer/tools/pipelines/] for more details.
 
 # Usage
 
