@@ -20,7 +20,7 @@ cache:
 before_install:
   - pushd ..
   - git clone https://github.com/phac-nml/irida.git
-  - pushd irida; git checkout -b 19.01.3 19.01.3;
+  - pushd irida; git checkout -b 21.01 21.01;
   - pushd lib; ./install-libs.sh; popd
   - mvn clean install -DskipTests; popd
   - popd
