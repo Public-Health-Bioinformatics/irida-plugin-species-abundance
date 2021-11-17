@@ -11,7 +11,9 @@ language: java
 # https://docs.travis-ci.com/user/reference/trusty/#jvm-clojure-groovy-java-scala-images
 jdk:
  - oraclejdk8
+ - oraclejdk11
  - openjdk8
+ - openjdk11
 
 cache:
   directories:
