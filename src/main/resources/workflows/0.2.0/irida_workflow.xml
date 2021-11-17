@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<iridaWorkflow>
+  <id>771c820c-6507-4dd7-91da-15944b064db0</id>
+  <name>species-abundance</name>
+  <version>0.2.0</version>
+  <analysisType>SPECIES_ABUNDANCE</analysisType>
+  <inputs>
+    <sequenceReadsPaired>sequence_reads_paired</sequenceReadsPaired>
+    <requiresSingleSample>true</requiresSingleSample>
+  </inputs>
+  <parameters>
+    <parameter name="kraken2-1-confidence" defaultValue="0.0">
+      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/iuc/kraken2/kraken2/2.1.1+galaxy1" parameterName="confidence" label="Confidence" type="float"/>
+    </parameter>
+    <parameter name="kraken2-1-kraken2_database" required="true">
+      <dynamicSource>
+        <galaxyToolDataTable name="kraken2_databases" displayColumn="name" parameterColumn="value" />
+      </dynamicSource>
+      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/iuc/kraken2/kraken2/2.1.1+galaxy1" parameterName="kraken2_database"/>
+    </parameter>
+    <parameter name="kraken2-1-min_base_quality" defaultValue="0">
+      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/iuc/kraken2/kraken2/2.1.1+galaxy1" parameterName="min_base_quality" label="Minimum Base Quality" type="integer"/>
+    </parameter>
+    <parameter name="bracken-2-threshold" defaultValue="10">
+      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/iuc/bracken/est_abundance/2.6.1+galaxy0" parameterName="threshold"/>
+    </parameter>
+    <parameter name="bracken-2-kmer_distr" required="true">
+      <dynamicSource>
+        <galaxyToolDataTable name="bracken_databases" displayColumn="name" parameterColumn="value" />
+      </dynamicSource>
+      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/iuc/bracken/est_abundance/2.6.1+galaxy0" parameterName="kmer_distr"/>
+    </parameter>
+  </parameters>
+  <outputs>
+    <output name="species_abundance" fileName="species_abundance.tsv" />
+    <output name="kraken2_report" fileName="kraken2_report.tsv" />
+  </outputs>
+  <toolRepositories>
+    <repository>
+      <name>kraken2</name>
+      <owner>iuc</owner>
+      <url>https://toolshed.g2.bx.psu.edu</url>
+      <revision>e674066930b2</revision>
+    </repository>
+    <repository>
+      <name>bracken</name>
+      <owner>iuc</owner>
+      <url>https://toolshed.g2.bx.psu.edu</url>
+      <revision>b08ac10aed96</revision>
+    </repository>
+    <repository>
+      <name>data_manager_build_kraken2_database</name>
+      <owner>iuc</owner>
+      <url>https://toolshed.g2.bx.psu.edu</url>
+      <revision>2f27f3b86827</revision>
+    </repository>
+    <repository>
+      <name>data_manager_build_bracken_database</name>
+      <owner>iuc</owner>
+      <url>https://toolshed.g2.bx.psu.edu</url>
+      <revision>3c7d2c84cb09</revision>
+    </repository>
+  </toolRepositories>
+</iridaWorkflow>

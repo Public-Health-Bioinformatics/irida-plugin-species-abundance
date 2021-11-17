@@ -78,7 +78,7 @@ public class SpeciesAbundancePlugin extends Plugin {
 		 */
 		@Override
 		public UUID getDefaultWorkflowUUID() {
-			return UUID.fromString("e2cc19cc-defc-49df-9b23-db35c2aea71c");
+			return UUID.fromString("771c820c-6507-4dd7-91da-15944b064db0");
 		}
 
 		/*******************************************************************************
