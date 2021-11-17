@@ -31,10 +31,10 @@ managers within your Galaxy instance. These can be found at:
 
 | Name                               | Version               | Galaxy Tool                                                                                |
 |------------------------------------|-----------------------|--------------------------------------------------------------------------------------------|
-| kraken2                            | `2.0.8_beta+galaxy0`  | <https://toolshed.g2.bx.psu.edu/view/iuc/kraken2/328c607150ff>                             |
-| bracken                            | `2.5+galaxy0`         | <https://toolshed.g2.bx.psu.edu/view/iuc/bracken/a5145865e467>                             |
-| data_manager_build_kraken2_database| `2.0.8_beta+galaxy1`  | <https://toolshed.g2.bx.psu.edu/view/iuc/data_manager_build_kraken2_database/6ba1ec5f86fc> |
-| data_manager_build_bracken_database| `2.5+galaxy0`         | <https://toolshed.g2.bx.psu.edu/view/iuc/data_manager_build_bracken_database/c2e4127fb5bf> |
+| kraken2                            | `2.1.1+galaxy1`       | <https://toolshed.g2.bx.psu.edu/view/iuc/kraken2/e674066930b2>                             |
+| bracken                            | `2.6.1+galaxy0`       | <https://toolshed.g2.bx.psu.edu/view/iuc/bracken/b08ac10aed96>                             |
+| data_manager_build_kraken2_database| `2.1.1`               | <https://toolshed.g2.bx.psu.edu/view/iuc/data_manager_build_kraken2_database/2f27f3b86827> |
+| data_manager_build_bracken_database| `2.5.1+galaxy1`       | <https://toolshed.g2.bx.psu.edu/view/iuc/data_manager_build_bracken_database/3c7d2c84cb09> |
 
 ## Installing to IRIDA
 
@@ -89,7 +89,7 @@ cd irida
 2. Checkout appropriate version of IRIDA
 
 ```bash
-git checkout 19.01.3
+git checkout -b 21.01 21.01
 ```
 
 3. Install IRIDA to local repository
@@ -114,7 +114,7 @@ Once complete, you should end up with a file `target/irida-plugin-species-abunda
 
 The following dependencies are required in order to make use of this plugin.
 
-* [IRIDA][] >= 0.23.0
+* [IRIDA][] >= 21.01
 * [Java][] >= 1.8 and [Maven][maven] (for building)
 
 
