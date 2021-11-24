@@ -33,7 +33,7 @@ import ca.corefacility.bioinformatics.irida.service.workflow.IridaWorkflowsServi
 
 public class SpeciesAbundancePluginUpdaterTest {
     private String WORKFLOW_NAME = "species-abundance";
-    private String WORKFLOW_VERSION = "0.1.0";
+    private String WORKFLOW_VERSION = "0.2.0";
 
     private SpeciesAbundancePluginUpdater updater;
 
@@ -64,11 +64,24 @@ public class SpeciesAbundancePluginUpdaterTest {
     @Test
     public void testUpdate() throws Throwable {
         ImmutableMap<String, String> expectedResults = ImmutableMap.<String, String>builder()
-                .put("species-abundance/taxon_name", "Escherichia coli")
                 .put("species-abundance/taxonomy_level", "S")
+                .put("species-abundance/taxon_name", "Escherichia coli")
                 .put("species-abundance/taxonomy_id", "562")
                 .put("species-abundance/proportion", "0.98546")
+                .put("species-abundance/taxon_name_2", "Enterobacter hormaechei")
+                .put("species-abundance/taxonomy_id_2", "158836")
+                .put("species-abundance/proportion_2", "0.00662")
+                .put("species-abundance/taxon_name_3", "Shigella dysenteriae")
+                .put("species-abundance/taxonomy_id_3", "622")
+                .put("species-abundance/proportion_3", "0.00198")
+                .put("species-abundance/taxon_name_4", "Salmonella enterica")
+                .put("species-abundance/taxonomy_id_4", "28901")
+                .put("species-abundance/proportion_4", "0.00105")
+                .put("species-abundance/taxon_name_5", "Escherichia albertii")
+                .put("species-abundance/taxonomy_id_5", "208962")
+                .put("species-abundance/proportion_5", "0.00083")
                 .build();
+
         Path speciesAbundanceFilePath = Paths.get(ClassLoader.getSystemResource("species_abundance.tsv").toURI());
 
         AnalysisOutputFile speciesAbundanceFile = new AnalysisOutputFile(speciesAbundanceFilePath, null, null, null);
@@ -122,20 +135,24 @@ public class SpeciesAbundancePluginUpdaterTest {
     @Test
     public void testParseSpeciesAbundanceFile() throws Throwable {
         Path speciesAbundanceFilePath = Paths.get(ClassLoader.getSystemResource("species_abundance.tsv").toURI());
-        Map<String, String> mostAbundantSpecies = updater.parseSpeciesAbundanceFile(speciesAbundanceFilePath);
-        assertThat(mostAbundantSpecies, IsMapContaining.hasKey("name"));
-        assertThat(mostAbundantSpecies, IsMapContaining.hasKey("taxonomy_lvl"));
-        assertThat(mostAbundantSpecies, IsMapContaining.hasKey("taxonomy_id"));
-        assertThat(mostAbundantSpecies, IsMapContaining.hasKey("fraction_total_reads"));
+        List<Map<String, String>> speciesAbundances = updater.parseSpeciesAbundanceFile(speciesAbundanceFilePath);
+        for (Map<String, String> species : speciesAbundances) {
+            assertThat(species, IsMapContaining.hasKey("name"));
+            assertThat(species, IsMapContaining.hasKey("taxonomy_lvl"));
+            assertThat(species, IsMapContaining.hasKey("taxonomy_id"));
+            assertThat(species, IsMapContaining.hasKey("fraction_total_reads"));
+        }
     }
 
     @Test
     public void testParseSpeciesAbundanceFileNoHeader() throws Throwable {
         Path speciesAbundanceFilePath = Paths.get(ClassLoader.getSystemResource("species_abundance_no_header.tsv").toURI());
-        Map<String, String> mostAbundantSpecies = updater.parseSpeciesAbundanceFile(speciesAbundanceFilePath);
-        assertThat(mostAbundantSpecies, IsMapContaining.hasKey("name"));
-        assertThat(mostAbundantSpecies, IsMapContaining.hasKey("taxonomy_lvl"));
-        assertThat(mostAbundantSpecies, IsMapContaining.hasKey("taxonomy_id"));
-        assertThat(mostAbundantSpecies, IsMapContaining.hasKey("fraction_total_reads"));
+        List<Map<String, String>> speciesAbundances = updater.parseSpeciesAbundanceFile(speciesAbundanceFilePath);
+        for (Map<String, String> species : speciesAbundances) {
+            assertThat(species, IsMapContaining.hasKey("name"));
+            assertThat(species, IsMapContaining.hasKey("taxonomy_lvl"));
+            assertThat(species, IsMapContaining.hasKey("taxonomy_id"));
+            assertThat(species, IsMapContaining.hasKey("fraction_total_reads"));
+        }
     }
 }

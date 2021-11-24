@@ -34,6 +34,7 @@ public class SpeciesAbundancePluginUpdater implements AnalysisSampleUpdater {
 	private final MetadataTemplateService metadataTemplateService;
 	private final SampleService sampleService;
 	private final IridaWorkflowsService iridaWorkflowsService;
+	private final int NUM_SPECIES_TO_REPORT = 5;
 
 	/**
 	 * Builds a new {@link SpeciesAbundancePluginUpdater} with the given services.
@@ -87,28 +88,49 @@ public class SpeciesAbundancePluginUpdater implements AnalysisSampleUpdater {
 			String workflowVersion = iridaWorkflow.getWorkflowDescription().getVersion();
 			String workflowName = iridaWorkflow.getWorkflowDescription().getName();
 
-			Map<String, String> mostAbundantSpecies = parseSpeciesAbundanceFile(speciesAbundanceFilePath);
+			List<Map<String, String>> speciesAbundances = parseSpeciesAbundanceFile(speciesAbundanceFilePath);
+			int speciesNum = 1;
+			for (Map<String, String> species : speciesAbundances) {
+				String key;
+				String value;
+				PipelineProvidedMetadataEntry entry;
 
-			String mostAbundantSpeciesName = mostAbundantSpecies.get("name");
-			PipelineProvidedMetadataEntry mostAbundantSpeciesNameEntry = new PipelineProvidedMetadataEntry(mostAbundantSpeciesName, "text", analysis);
-			String mostAbundantSpeciesNameKey = workflowName + "/" + "taxon_name";
-			metadataEntries.put(mostAbundantSpeciesNameKey, mostAbundantSpeciesNameEntry);
+				value = species.get("taxonomy_lvl");
+				entry = new PipelineProvidedMetadataEntry(value, "text", analysis);
+				// taxonomy_level is only recorded once per sample. (should be identical for all lines in a report.)
+				if (speciesNum == 1) {
+					key = workflowName + "/" + "taxonomy_level";
+					metadataEntries.put(key, entry);
+				}
 
-			String mostAbundantSpeciesTaxonomyLevel = mostAbundantSpecies.get("taxonomy_lvl");
-			PipelineProvidedMetadataEntry mostAbundantSpeciesTaxonomyLevelEntry = new PipelineProvidedMetadataEntry(mostAbundantSpeciesTaxonomyLevel, "text", analysis);
-			String mostAbundantSpeciesTaxonomyLevelKey = workflowName + "/" + "taxonomy_level";
-			metadataEntries.put(mostAbundantSpeciesTaxonomyLevelKey, mostAbundantSpeciesTaxonomyLevelEntry);
+				value = species.get("name");
+				entry = new PipelineProvidedMetadataEntry(value, "text", analysis);
+				if (speciesNum == 1) {
+					key = workflowName + "/" + "taxon_name";
+				} else {
+					key = workflowName + "/" + "taxon_name_" + speciesNum;
+				} 
+				metadataEntries.put(key, entry);
 
-			String mostAbundantSpeciesTaxonomyId = mostAbundantSpecies.get("taxonomy_id");
-			PipelineProvidedMetadataEntry mostAbundantSpeciesTaxonomyIdEntry = new PipelineProvidedMetadataEntry(mostAbundantSpeciesTaxonomyId, "text", analysis);
-			String mostAbundantSpeciesTaxonomyIdKey = workflowName + "/" + "taxonomy_id";
-			metadataEntries.put(mostAbundantSpeciesTaxonomyIdKey, mostAbundantSpeciesTaxonomyIdEntry);
+				value = species.get("taxonomy_id");
+				entry = new PipelineProvidedMetadataEntry(value, "text", analysis);
+				if (speciesNum == 1) {
+					key = workflowName + "/" + "taxonomy_id";
+				} else {
+					key = workflowName + "/" + "taxonomy_id_" + speciesNum;
+				}
+				metadataEntries.put(key, entry);
 
-			String mostAbundantSpeciesProportionTotalReads = mostAbundantSpecies.get("fraction_total_reads");
-			PipelineProvidedMetadataEntry mostAbundantSpeciesProportionTotalReadsEntry = new PipelineProvidedMetadataEntry(mostAbundantSpeciesProportionTotalReads, "float", analysis);
-			String mostAbundantSpeciesProportionTotalReadsKey = workflowName + "/" + "proportion";
-			metadataEntries.put(mostAbundantSpeciesProportionTotalReadsKey, mostAbundantSpeciesProportionTotalReadsEntry);
-
+				value = species.get("fraction_total_reads");
+				entry = new PipelineProvidedMetadataEntry(value, "float", analysis);
+				if (speciesNum == 1) {
+					key = workflowName + "/" + "proportion";
+				} else {
+					key = workflowName + "/" + "proportion_" + speciesNum;
+				}
+				metadataEntries.put(key, entry);
+				speciesNum++;
+			}
 			//convert the string/entry Map to a Set of MetadataEntry
 			Set<MetadataEntry> metadataSet = metadataTemplateService.convertMetadataStringsToSet(metadataEntries);
 
@@ -136,9 +158,9 @@ public class SpeciesAbundancePluginUpdater implements AnalysisSampleUpdater {
 	 * @throws IOException If there was an error reading the file.
 	 */
 	@VisibleForTesting
-	Map<String, String> parseSpeciesAbundanceFile(Path speciesAbundanceFilePath) throws IOException {
+	List<Map<String, String>> parseSpeciesAbundanceFile(Path speciesAbundanceFilePath) throws IOException {
 		BufferedReader speciesAbundanceReader = new BufferedReader(new FileReader(speciesAbundanceFilePath.toFile()));
-		Map<String, String> mostAbundantSpecies = new HashMap<>();
+		List<Map<String, String>> abundances = new ArrayList<>();
 		ArrayList<String> expectedHeaderFields = new ArrayList<String>(Arrays.asList(
 				"name",
 		        "taxonomy_id",
@@ -151,23 +173,35 @@ public class SpeciesAbundancePluginUpdater implements AnalysisSampleUpdater {
 		try {
 			String headerLine = speciesAbundanceReader.readLine();
 			ArrayList<String> headerFields = new ArrayList<String>(Arrays.asList(headerLine.split("\t")));
-			String mostAbundantSpeciesLine;
+			String abundancesLine;
 			if (!headerFields.equals(expectedHeaderFields)) { // header not present
-					mostAbundantSpeciesLine = headerLine;
+					abundancesLine = headerLine;
 					headerFields = expectedHeaderFields;
 			} else {
-				mostAbundantSpeciesLine = speciesAbundanceReader.readLine();
+				abundancesLine = speciesAbundanceReader.readLine();
+				ArrayList<String> speciesAbundanceFields = new ArrayList<String>(Arrays.asList(abundancesLine.split("\t")));
+				Map<String, String> speciesAbundanceMap = new HashMap<>();
+				assert headerFields.size() == speciesAbundanceFields.size();
+				for (int j = 0; j < headerFields.size(); j++) {
+					speciesAbundanceMap.put(headerFields.get(j), speciesAbundanceFields.get(j));
+				}
+				abundances.add(speciesAbundanceMap);
 			}
-			ArrayList<String> mostAbundantSpeciesFields = new ArrayList<String>(Arrays.asList(mostAbundantSpeciesLine.split("\t")));
-			assert headerFields.size() == mostAbundantSpeciesFields.size();
-			for (int i = 0; i < headerFields.size(); i++) {
-				mostAbundantSpecies.put(headerFields.get(i), mostAbundantSpeciesFields.get(i));
+			for (int i = 0; i < (NUM_SPECIES_TO_REPORT - 1); i++) {
+				abundancesLine = speciesAbundanceReader.readLine();
+				ArrayList<String> speciesAbundanceFields = new ArrayList<String>(Arrays.asList(abundancesLine.split("\t")));
+				Map<String, String> speciesAbundanceMap = new HashMap<>();
+				assert headerFields.size() == speciesAbundanceFields.size();
+				for (int j = 0; j < headerFields.size(); j++) {
+					speciesAbundanceMap.put(headerFields.get(j), speciesAbundanceFields.get(j));
+				}
+				abundances.add(speciesAbundanceMap);
 			}
 		} finally {
 			speciesAbundanceReader.close();
 		}
 
-		return mostAbundantSpecies;
+		return abundances;
 	}
 
 	/**
