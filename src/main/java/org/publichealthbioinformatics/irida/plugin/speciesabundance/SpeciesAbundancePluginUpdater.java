@@ -166,11 +166,11 @@ public class SpeciesAbundancePluginUpdater implements AnalysisSampleUpdater {
 		BufferedReader speciesAbundanceReader = new BufferedReader(new FileReader(speciesAbundanceFilePath.toFile()));
 		List<Map<String, String>> abundances = new ArrayList<>();
 		ArrayList<String> expectedHeaderFields = new ArrayList<String>(Arrays.asList(
-				"name",
+		        "name",
 		        "taxonomy_id",
 		        "taxonomy_lvl",
 		        "kraken_assigned_seqs",
-				"bracken_assigned_seqs",
+		        "bracken_assigned_seqs",
 		        "total_seqs",
 		        "kraken_fraction_total_seqs",
 		        "bracken_fraction_total_seqs"
