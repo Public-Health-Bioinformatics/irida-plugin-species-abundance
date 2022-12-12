@@ -89,12 +89,16 @@ public class SpeciesAbundancePluginUpdater implements AnalysisSampleUpdater {
 			String workflowName = iridaWorkflow.getWorkflowDescription().getName();
 
 			List<Map<String, String>> speciesAbundances = parseSpeciesAbundanceFile(speciesAbundanceFilePath);
+			Map<String, String> unclassifiedAbundances = speciesAbundances.remove(0);
+			String key;
+			String value;
+			PipelineProvidedMetadataEntry entry;
+			value = unclassifiedAbundances.get("bracken_fraction_total_seqs");
+			entry = new PipelineProvidedMetadataEntry(value, "float", analysis);
+			key = workflowName + "/" + "proportion_unclassified";
+			metadataEntries.put(key, entry);
 			int speciesNum = 1;
 			for (Map<String, String> species : speciesAbundances) {
-				String key;
-				String value;
-				PipelineProvidedMetadataEntry entry;
-
 				value = species.get("taxonomy_lvl");
 				entry = new PipelineProvidedMetadataEntry(value, "text", analysis);
 				// taxonomy_level is only recorded once per sample. (should be identical for all lines in a report.)
@@ -121,7 +125,7 @@ public class SpeciesAbundancePluginUpdater implements AnalysisSampleUpdater {
 				}
 				metadataEntries.put(key, entry);
 
-				value = species.get("fraction_total_reads");
+				value = species.get("bracken_fraction_total_seqs");
 				entry = new PipelineProvidedMetadataEntry(value, "float", analysis);
 				if (speciesNum == 1) {
 					key = workflowName + "/" + "proportion";
@@ -150,8 +154,8 @@ public class SpeciesAbundancePluginUpdater implements AnalysisSampleUpdater {
 	 *                      should look like:
 	 *
 	 *                      <pre>
-	 *                      name	taxonomy_id	taxonomy_lvl	kraken_assigned_reads	added_reads	new_est_reads	fraction_total_reads
-	 *                      Salmonella enterica	28901	S	433515	32457	465972	0.99016
+	 *                      name	taxonomy_id	taxonomy_lvl	kraken_assigned_seqs	bracken_assigned_seqs	total_seqs	kraken_fraction_total_seqs	bracken_fraction_total_seqs
+	 *                      Salmonella enterica	28901	S	228436	841169	848138	0.269338	0.991783
 	 *                      </pre>
 	 *
 	 * @return A {@link Map<String, String>} containing the read count.
@@ -162,13 +166,14 @@ public class SpeciesAbundancePluginUpdater implements AnalysisSampleUpdater {
 		BufferedReader speciesAbundanceReader = new BufferedReader(new FileReader(speciesAbundanceFilePath.toFile()));
 		List<Map<String, String>> abundances = new ArrayList<>();
 		ArrayList<String> expectedHeaderFields = new ArrayList<String>(Arrays.asList(
-				"name",
+		        "name",
 		        "taxonomy_id",
 		        "taxonomy_lvl",
-		        "kraken_assigned_reads",
-		        "added_reads",
-		        "new_est_reads",
-		        "fraction_total_reads"
+		        "kraken_assigned_seqs",
+		        "bracken_assigned_seqs",
+		        "total_seqs",
+		        "kraken_fraction_total_seqs",
+		        "bracken_fraction_total_seqs"
 		));
 		try {
 			String headerLine = speciesAbundanceReader.readLine();
@@ -187,7 +192,7 @@ public class SpeciesAbundancePluginUpdater implements AnalysisSampleUpdater {
 				}
 				abundances.add(speciesAbundanceMap);
 			}
-			for (int i = 0; i < (NUM_SPECIES_TO_REPORT - 1); i++) {
+			for (int i = 0; i < NUM_SPECIES_TO_REPORT; i++) {
 				abundancesLine = speciesAbundanceReader.readLine();
 				ArrayList<String> speciesAbundanceFields = new ArrayList<String>(Arrays.asList(abundancesLine.split("\t")));
 				Map<String, String> speciesAbundanceMap = new HashMap<>();

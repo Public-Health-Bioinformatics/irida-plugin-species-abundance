@@ -9,7 +9,7 @@
     <requiresSingleSample>true</requiresSingleSample>
   </inputs>
   <parameters>
-    <parameter name="kraken2-1-confidence" defaultValue="0.0">
+    <parameter name="kraken2-1-confidence" defaultValue="0.1">
       <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/iuc/kraken2/kraken2/2.1.1+galaxy1" parameterName="confidence" label="Confidence" type="float"/>
     </parameter>
     <parameter name="kraken2-1-kraken2_database" required="true">
@@ -22,20 +22,35 @@
       <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/iuc/kraken2/kraken2/2.1.1+galaxy1" parameterName="min_base_quality" label="Minimum Base Quality" type="integer"/>
     </parameter>
     <parameter name="bracken-2-threshold" defaultValue="10">
-      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/iuc/bracken/est_abundance/2.6.1+galaxy0" parameterName="threshold"/>
+      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/iuc/bracken/est_abundance/2.7+galaxy0" parameterName="threshold"/>
     </parameter>
     <parameter name="bracken-2-kmer_distr" required="true">
       <dynamicSource>
         <galaxyToolDataTable name="bracken_databases" displayColumn="name" parameterColumn="value" />
       </dynamicSource>
-      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/iuc/bracken/est_abundance/2.6.1+galaxy0" parameterName="kmer_distr"/>
+      <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/iuc/bracken/est_abundance/2.7+galaxy0" parameterName="kmer_distr"/>
     </parameter>
   </parameters>
   <outputs>
+    <output name="fastp_report" fileName="fastp_report.html" />
+    <output name="fastp_json" fileName="fastp.json" />
     <output name="species_abundance" fileName="species_abundance.tsv" />
     <output name="kraken2_report" fileName="kraken2_report.tsv" />
+    <output name="krona_chart" fileName="krona_chart.html" />
   </outputs>
   <toolRepositories>
+    <repository>
+      <name>fastp</name>
+      <owner>iuc</owner>
+      <url>https://toolshed.g2.bx.psu.edu</url>
+      <revision>65b93b623c77</revision>
+    </repository>
+    <repository>
+      <name>fastp_json_to_tabular</name>
+      <owner>public-health-bioinformatics</owner>
+      <url>https://toolshed.g2.bx.psu.edu</url>
+      <revision>091a2fb2e7ad</revision>
+    </repository>
     <repository>
       <name>kraken2</name>
       <owner>iuc</owner>
@@ -49,10 +64,28 @@
       <revision>b08ac10aed96</revision>
     </repository>
     <repository>
+      <name>adjust_bracken_for_unclassified_reads</name>
+      <owner>public-health-bioinformatics</owner>
+      <url>https://toolshed.g2.bx.psu.edu</url>
+      <revision>899a650587ed</revision>
+    </repository>
+    <repository>
+      <name>krakentools</name>
+      <owner>jvolkening</owner>
+      <url>https://toolshed.g2.bx.psu.edu</url>
+      <revision>d491c23394f9</revision>
+    </repository>
+    <repository>
+      <name>taxonomy_krona_chart</name>
+      <owner>crs4</owner>
+      <url>https://toolshed.g2.bx.psu.edu</url>
+      <revision>e9005d1f3cfd</revision>
+    </repository>
+    <repository>
       <name>data_manager_build_kraken2_database</name>
       <owner>iuc</owner>
       <url>https://toolshed.g2.bx.psu.edu</url>
-      <revision>2f27f3b86827</revision>
+      <revision>9002633b4737</revision>
     </repository>
     <repository>
       <name>data_manager_build_bracken_database</name>

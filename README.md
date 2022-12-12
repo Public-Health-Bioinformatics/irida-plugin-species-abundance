@@ -32,12 +32,15 @@ This can be used to estimate the relative abundance of sequence reads originatin
 In order to use this pipeline, you will also have to install the [kraken2][] and [bracken][] Galaxy tools and their data 
 managers within your Galaxy instance. These can be found at:
 
-| Name                               | Version               | Revision                                                                                   |
-|------------------------------------|-----------------------|--------------------------------------------------------------------------------------------|
-| kraken2                            | `2.1.1+galaxy1`       | [`e674066930b2`](https://toolshed.g2.bx.psu.edu/view/iuc/kraken2/e674066930b2)             |
-| bracken                            | `2.6.1+galaxy0`       | [`b08ac10aed96`](https://toolshed.g2.bx.psu.edu/view/iuc/bracken/b08ac10aed96)             |
-| data_manager_build_kraken2_database| `2.1.1`               | [`2f27f3b86827`](https://toolshed.g2.bx.psu.edu/view/iuc/data_manager_build_kraken2_database/2f27f3b86827) |
-| data_manager_build_bracken_database| `2.5.1+galaxy1`       | [`3c7d2c84cb09`](https://toolshed.g2.bx.psu.edu/view/iuc/data_manager_build_bracken_database/3c7d2c84cb09) |
+| Name                                  | Version          | Owner                          | Metadata Revision | Galaxy Toolshed Link                                            |
+|---------------------------------------|------------------|--------------------------------|-------------------|----------------------------------------|
+| fastp                                 | `0.23.2+galaxy0` | `iuc`                          |   10 (2022-02-03) | [fastp-10:65b93b623c77](https://toolshed.g2.bx.psu.edu/view/iuc/fastp/65b93b623c77) |
+| fastp_json_to_tabular                 | `0.1.0`          | `public-health-bioinformatics` |    0 (2022-03-10) | [fastp_json_to_tabular-0:091a2fb2e7ad](https://toolshed.g2.bx.psu.edu/view/public-health-bioinformatics/fastp_json_to_tabular/091a2fb2e7ad) |
+| kraken2                               | `2.1.1+galaxy1`  | `iuc`                          |    4 (2021-02-17) | [kraken2-4:e674066930b2](https://toolshed.g2.bx.psu.edu/view/iuc/kraken2/e674066930b2) |
+| bracken                               | `2.6.1+galaxy0`  | `iuc`                          |    4 (2021-06-07) | [bracken-4:b08ac10aed96](https://toolshed.g2.bx.psu.edu/view/iuc/bracken/b08ac10aed96) |
+| adjust_bracken_for_unclassified_reads | `0.1.0`          | `public-health-bioinformatics` |    1 (2021-03-10) | [adjust_bracken_for_unclassified_reads-1:3cde438eb222](https://toolshed.g2.bx.psu.edu/view/iuc/bracken/b08ac10aed96) |
+| data_manager_build_kraken2_database   | `2.1.2+galaxy0`  | `iuc`                          |    6 (2022-06-24) | [`data_manager_build_kraken2_database-6:9002633b4737`](https://toolshed.g2.bx.psu.edu/view/iuc/data_manager_build_kraken2_database/9002633b4737) |
+| data_manager_build_bracken_database   | `2.5.1+galaxy1`  | `iuc`                          |    3 (2021-11-08) | [`data_manager_build_bracken_database-3:3c7d2c84cb09`](https://toolshed.g2.bx.psu.edu/view/iuc/data_manager_build_bracken_database/3c7d2c84cb09) |
 
 ## Preparing Databases
 
@@ -132,24 +135,25 @@ classification report, and a `bracken` estimate of the relative abundance of rea
 And, you should be able to save and view these results in the IRIDA metadata table. The following fields are written to
 the IRIDA 'Line List':
 
-| Field Name                           | Description                                                                         |
-|--------------------------------------|-------------------------------------------------------------------------------------|
-| `species-abundance/taxonomy_level`   | The taxonomic level at which reads were aggregated ('S' for species)                |
-| `species-abundance/taxon_name`       | The scientific name of the most abundant species in the sample                      |
-| `species-abundance/taxonomy_id`      | The NCBI taxonomy ID for the most abundant species in the sample                    |
-| `species-abundance/proportion`       | The proportion of reads in this sample assigned to the most abundant species        |
-| `species-abundance/taxon_name_2`     | The scientific name of the second-most abundant species in the sample               |
-| `species-abundance/taxonomy_id_2`    | The NCBI taxonomy ID for the second-most abundant species in the sample             |
-| `species-abundance/proportion_2`     | The proportion of reads in this sample assigned to the second-most abundant species |
-| `species-abundance/taxon_name_3`     | The scientific name of the third-most abundant species in the sample                |
-| `species-abundance/taxonomy_id_3`    | The NCBI taxonomy ID for the third-most abundant species in the sample              |
-| `species-abundance/proportion_3`     | The proportion of reads in this sample assigned to the third-most abundant species  |
-| `species-abundance/taxon_name_4`     | The scientific name of the fourth-most abundant species in the sample               |
-| `species-abundance/taxonomy_id_4`    | The NCBI taxonomy ID for the fourth-most abundant species in the sample             |
-| `species-abundance/proportion_4`     | The proportion of reads in this sample assigned to the fourth-most abundant species |
-| `species-abundance/taxon_name_5`     | The scientific name of the fifth-most abundant species in the sample                |
-| `species-abundance/taxonomy_id_5`    | The NCBI taxonomy ID for the fifth-most abundant species in the sample              |
-| `species-abundance/proportion_5`     | The proportion of reads in this sample assigned to the fifth-most abundant species  |
+| Field Name                                  | Description                                                                         |
+|---------------------------------------------|-------------------------------------------------------------------------------------|
+| `species-abundance/taxonomy_level`          | The taxonomic level at which reads were aggregated ('S' for species)                |
+| `species-abundance/taxon_name`              | The scientific name of the most abundant species in the sample                      |
+| `species-abundance/taxonomy_id`             | The NCBI taxonomy ID for the most abundant species in the sample                    |
+| `species-abundance/proportion`              | The proportion of reads in this sample assigned to the most abundant species        |
+| `species-abundance/taxon_name_2`            | The scientific name of the second-most abundant species in the sample               |
+| `species-abundance/taxonomy_id_2`           | The NCBI taxonomy ID for the second-most abundant species in the sample             |
+| `species-abundance/proportion_2`            | The proportion of reads in this sample assigned to the second-most abundant species |
+| `species-abundance/taxon_name_3`            | The scientific name of the third-most abundant species in the sample                |
+| `species-abundance/taxonomy_id_3`           | The NCBI taxonomy ID for the third-most abundant species in the sample              |
+| `species-abundance/proportion_3`            | The proportion of reads in this sample assigned to the third-most abundant species  |
+| `species-abundance/taxon_name_4`            | The scientific name of the fourth-most abundant species in the sample               |
+| `species-abundance/taxonomy_id_4`           | The NCBI taxonomy ID for the fourth-most abundant species in the sample             |
+| `species-abundance/proportion_4`            | The proportion of reads in this sample assigned to the fourth-most abundant species |
+| `species-abundance/taxon_name_5`            | The scientific name of the fifth-most abundant species in the sample                |
+| `species-abundance/taxonomy_id_5`           | The NCBI taxonomy ID for the fifth-most abundant species in the sample              |
+| `species-abundance/proportion_5`            | The proportion of reads in this sample assigned to the fifth-most abundant species  |
+| `species-abundance/proportion_unclassified` | The proportion of unclassified reads in the sample                                  |                                                                                  |
 
 Note that by default, these fields will not appear in sorted order in the line list. Refer to the [IRIDA Documentation on metadata management](https://phac-nml.github.io/irida-documentation/user/user/sample-metadata/#project-metadata-line-list) to create a customized view of these fields.
 
