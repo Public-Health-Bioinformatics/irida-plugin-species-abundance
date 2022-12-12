@@ -9,7 +9,7 @@
     <requiresSingleSample>true</requiresSingleSample>
   </inputs>
   <parameters>
-    <parameter name="kraken2-1-confidence" defaultValue="0.0">
+    <parameter name="kraken2-1-confidence" defaultValue="0.1">
       <toolParameter toolId="toolshed.g2.bx.psu.edu/repos/iuc/kraken2/kraken2/2.1.1+galaxy1" parameterName="confidence" label="Confidence" type="float"/>
     </parameter>
     <parameter name="kraken2-1-kraken2_database" required="true">

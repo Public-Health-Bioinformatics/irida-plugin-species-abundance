@@ -192,7 +192,7 @@ public class SpeciesAbundancePluginUpdater implements AnalysisSampleUpdater {
 				}
 				abundances.add(speciesAbundanceMap);
 			}
-			for (int i = 0; i < (NUM_SPECIES_TO_REPORT - 1); i++) {
+			for (int i = 0; i < NUM_SPECIES_TO_REPORT; i++) {
 				abundancesLine = speciesAbundanceReader.readLine();
 				ArrayList<String> speciesAbundanceFields = new ArrayList<String>(Arrays.asList(abundancesLine.split("\t")));
 				Map<String, String> speciesAbundanceMap = new HashMap<>();

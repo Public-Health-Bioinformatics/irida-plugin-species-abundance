@@ -77,6 +77,9 @@ public class SpeciesAbundancePluginUpdaterTest {
                 .put("species-abundance/taxon_name_4", "Citrobacter freundii")
                 .put("species-abundance/taxonomy_id_4", "546")
                 .put("species-abundance/proportion_4", "0.052591")
+                .put("species-abundance/taxon_name_5", "Enterobacter hormaechei")
+                .put("species-abundance/taxonomy_id_5", "158836")
+                .put("species-abundance/proportion_5", "0.034208")
                 .put("species-abundance/proportion_unclassified", "0.070518")
                 .build();
 
