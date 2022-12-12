@@ -135,24 +135,25 @@ classification report, and a `bracken` estimate of the relative abundance of rea
 And, you should be able to save and view these results in the IRIDA metadata table. The following fields are written to
 the IRIDA 'Line List':
 
-| Field Name                           | Description                                                                         |
-|--------------------------------------|-------------------------------------------------------------------------------------|
-| `species-abundance/taxonomy_level`   | The taxonomic level at which reads were aggregated ('S' for species)                |
-| `species-abundance/taxon_name`       | The scientific name of the most abundant species in the sample                      |
-| `species-abundance/taxonomy_id`      | The NCBI taxonomy ID for the most abundant species in the sample                    |
-| `species-abundance/proportion`       | The proportion of reads in this sample assigned to the most abundant species        |
-| `species-abundance/taxon_name_2`     | The scientific name of the second-most abundant species in the sample               |
-| `species-abundance/taxonomy_id_2`    | The NCBI taxonomy ID for the second-most abundant species in the sample             |
-| `species-abundance/proportion_2`     | The proportion of reads in this sample assigned to the second-most abundant species |
-| `species-abundance/taxon_name_3`     | The scientific name of the third-most abundant species in the sample                |
-| `species-abundance/taxonomy_id_3`    | The NCBI taxonomy ID for the third-most abundant species in the sample              |
-| `species-abundance/proportion_3`     | The proportion of reads in this sample assigned to the third-most abundant species  |
-| `species-abundance/taxon_name_4`     | The scientific name of the fourth-most abundant species in the sample               |
-| `species-abundance/taxonomy_id_4`    | The NCBI taxonomy ID for the fourth-most abundant species in the sample             |
-| `species-abundance/proportion_4`     | The proportion of reads in this sample assigned to the fourth-most abundant species |
-| `species-abundance/taxon_name_5`     | The scientific name of the fifth-most abundant species in the sample                |
-| `species-abundance/taxonomy_id_5`    | The NCBI taxonomy ID for the fifth-most abundant species in the sample              |
-| `species-abundance/proportion_5`     | The proportion of reads in this sample assigned to the fifth-most abundant species  |
+| Field Name                                  | Description                                                                         |
+|---------------------------------------------|-------------------------------------------------------------------------------------|
+| `species-abundance/taxonomy_level`          | The taxonomic level at which reads were aggregated ('S' for species)                |
+| `species-abundance/taxon_name`              | The scientific name of the most abundant species in the sample                      |
+| `species-abundance/taxonomy_id`             | The NCBI taxonomy ID for the most abundant species in the sample                    |
+| `species-abundance/proportion`              | The proportion of reads in this sample assigned to the most abundant species        |
+| `species-abundance/taxon_name_2`            | The scientific name of the second-most abundant species in the sample               |
+| `species-abundance/taxonomy_id_2`           | The NCBI taxonomy ID for the second-most abundant species in the sample             |
+| `species-abundance/proportion_2`            | The proportion of reads in this sample assigned to the second-most abundant species |
+| `species-abundance/taxon_name_3`            | The scientific name of the third-most abundant species in the sample                |
+| `species-abundance/taxonomy_id_3`           | The NCBI taxonomy ID for the third-most abundant species in the sample              |
+| `species-abundance/proportion_3`            | The proportion of reads in this sample assigned to the third-most abundant species  |
+| `species-abundance/taxon_name_4`            | The scientific name of the fourth-most abundant species in the sample               |
+| `species-abundance/taxonomy_id_4`           | The NCBI taxonomy ID for the fourth-most abundant species in the sample             |
+| `species-abundance/proportion_4`            | The proportion of reads in this sample assigned to the fourth-most abundant species |
+| `species-abundance/taxon_name_5`            | The scientific name of the fifth-most abundant species in the sample                |
+| `species-abundance/taxonomy_id_5`           | The NCBI taxonomy ID for the fifth-most abundant species in the sample              |
+| `species-abundance/proportion_5`            | The proportion of reads in this sample assigned to the fifth-most abundant species  |
+| `species-abundance/proportion_unclassified` | The proportion of unclassified reads in the sample                                  |                                                                                  |
 
 Note that by default, these fields will not appear in sorted order in the line list. Refer to the [IRIDA Documentation on metadata management](https://phac-nml.github.io/irida-documentation/user/user/sample-metadata/#project-metadata-line-list) to create a customized view of these fields.
 
