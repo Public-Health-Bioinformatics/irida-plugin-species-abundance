@@ -67,11 +67,11 @@ Two types of data were used to test this pipeline in Galaxy- **1)** in-silico da
  
 To test the accuracy of the pipeline, **In silico data** was generated from a diversity of organisms (e.g. bacteria, viruses) representing various genomic content (e.g. genome sizes, GC content, plasmid content). Reference genomes for these organisms were retrieved from NCBI RefSeq and used for generating paired end sequences.
 
-- The list of organisms used in the in-silico data generation along with their NCBI taxon ids and genomic information is located at - `list of organisms.xlsx`
+- The list of organisms used in the in-silico data generation along with their NCBI taxon ids and genomic information is located at - [List_of_organisms.xlsx](https://doi.org/10.5281/zenodo.7994845)
  
-- NCBI RefSeq for the organisms are located at- `organimsrefseq`
+- NCBI RefSeq for the organisms are located at - [RefSeq_accessions.xlsx](https://doi.org/10.5281/zenodo.7994845)
  
-- The simulated reads generated using NCBI RefSeq database for each organism are located at- `read_simulation1`
+- The simulated reads generated using NCBI RefSeq database for each organism are located at- https://doi.org/10.5281/zenodo.7994845
 
  
 **Mock community** sample comprising 8 bacterial species, including both G- and G+ bacteria as well as 2 yeasts (from https://zymoresearch.eu/collections/zymobiomics-microbial-community-standards ) was used to obtain sequences (Illumina paired-end, 150bp) for testing the pipeline in Galaxy.
